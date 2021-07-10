@@ -6,5 +6,5 @@ Le projet a été créé avec Node.js, Express et MongoDB ces outils doivent êt
 
 Cloner le front-end (https://github.com/OpenClassrooms-Student-Center/go-fullstack-fr-frontend.git) et initialiser avec npm start et se rendre sur localhost:4200. 
 
-Pour le back-end Lancer "npm install" pour installer les dépendances et "nodemon server" pour démarrer le serveur.
+Pour le back-end lancer "npm install" pour installer les dépendances et "nodemon server" pour démarrer le serveur.
 
