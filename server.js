@@ -1,4 +1,4 @@
-const http = require("http"); // Importation du package http
+const http = require("http"); // Importation du package http de node
 const app = require("./app"); // Importation de app pour utilisation de l'application sur le serveur
 
 const normalizePort = val => {
@@ -35,7 +35,7 @@ const errorHandler = error => {
   }
 };
 
-const server = http.createServer(app);
+const server = http.createServer(app); // création d'une constante pour les appels serveur (req et res)
 
 server.on("error", errorHandler);
 server.on("listening", () => {

@@ -1,7 +1,7 @@
 const express = require("express");  // Importation d'express => Framework basé sur node.js
 const helmet = require("helmet"); // Protection contre certaines vulnérabilités 
 const bodyParser = require("body-parser"); // Permet d'extraire l'objet JSON des requêtes POST
-const mongoose = require("mongoose"); // Création d'un modèle de données afin de faciliter les opérations de la base de données
+const mongoose = require("mongoose"); // Facilite les intéractions avec notre base de données MongoDB
 const path = require("path"); // Plugin qui sert dans l'upload des images
 
 const sauceRoutes = require("./routes/sauce");
