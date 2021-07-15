@@ -1,15 +1,17 @@
 const bcrypt = require("bcrypt"); // Cryptage du MDP
 const jwt = require("jsonwebtoken"); // Permet un échange sécurisé de données entre deux parties
-const maskemail = require("maskemail");
+const cryptojs = require("crypto-js"); // Cryptage de l'adresse email
+require("dotenv").config();
 
 const User = require("../models/user");
 
 /// Inscription
 exports.signup = (req, res, next) => { 
+    const emailcryptojs = cryptojs.HmacSHA512(req.body.email, `${process.env.CRYPTO}`).toString();
     bcrypt.hash(req.body.password, 10) 
       .then(hash => {
         const user = new User({
-          email: maskemail (req.body.email, { allowed: /@\.-/ }),
+          email : emailcryptojs, 
           password: hash
         });
         user.save()
@@ -21,8 +23,8 @@ exports.signup = (req, res, next) => {
 
 /// Connexion
 exports.login = (req, res, next) => {
-  User.findOne({
-    email: maskemail(req.body.email)})
+  const emailcryptojs = cryptojs.HmacSHA512(req.body.email, `${process.env.CRYPTO}`).toString();
+    User.findOne({email: emailcryptojs})
       .then(user => {
         if (!user) {
           return res.status(401).json({error: "Utilisateur non trouvé !"});
@@ -43,5 +45,5 @@ exports.login = (req, res, next) => {
           })
           .catch(error => res.status(500).json({error}));
       })
-      .catch(error => res.status(500).json({ error }));
+      .catch(error => res.status(500).json({ error }))
 };
