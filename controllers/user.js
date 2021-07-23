@@ -9,10 +9,12 @@ require("dotenv").config();
 /// Inscription
 exports.signup = (req, res, next) => { 
   const encrypted = cryptojs.AES.encrypt(req.body.email, `${process.env.CRYPTO}`).toString();
+  const emailHash = cryptojs.HmacSHA1(req.body.email, `${process.env.CRYPTO}`).toString();
     bcrypt.hash(req.body.password, 10) 
       .then(hash => {
         const user = new User({
           email : encrypted, 
+          emailHash : emailHash, 
           password: hash
         });
         user.save()
@@ -24,8 +26,9 @@ exports.signup = (req, res, next) => {
 
 /// Connexion
 exports.login = (req, res, next) => {
-  const encrypted = cryptojs.AES.encrypt(req.body.email, `${process.env.CRYPTO}`).toString();
-    User.findOne({email: encrypted})
+  const emailHash = cryptojs.HmacSHA1(req.body.email, `${process.env.CRYPTO}`).toString();
+    User.findOne({
+      emailHash: emailHash})
       .then(user => {
         if (!user) {
           return res.status(401).json({error: "Utilisateur non trouvé !"});
