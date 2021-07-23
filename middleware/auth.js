@@ -1,6 +1,7 @@
 /// Protection des routes sélectionnées et vérification que l'utilisateur est authentifié avant d'autoriser l'envoi de ses requêtes.
 
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 module.exports = (req, res, next) => {
   try {

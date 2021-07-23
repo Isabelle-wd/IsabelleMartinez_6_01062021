@@ -1,13 +1,14 @@
+const User = require("../models/user");
 const bcrypt = require("bcrypt"); // Cryptage du MDP
 const jwt = require("jsonwebtoken"); // Permet un échange sécurisé de données entre deux parties
 const cryptojs = require("crypto-js"); // Cryptage de l'adresse email
 require("dotenv").config();
 
-const User = require("../models/user");
+
 
 /// Inscription
 exports.signup = (req, res, next) => { 
-    const encrypted = cryptojs.AES.encrypt(req.body.email, `${process.env.CRYPTO}`).toString();
+  const encrypted = cryptojs.AES.encrypt(req.body.email, `${process.env.CRYPTO}`).toString();
     bcrypt.hash(req.body.password, 10) 
       .then(hash => {
         const user = new User({
